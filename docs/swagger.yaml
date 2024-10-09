@@ -1,0 +1,81 @@
+basePath: /
+definitions:
+  models.GeneralResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+  models.TransactionRequest:
+    properties:
+      accountId:
+        type: integer
+      amount:
+        type: number
+      messageType:
+        description: PAYMENT | ADJUSTMENT
+        type: string
+      origin:
+        description: VISA | MASTER
+        type: string
+      transactionId:
+        description: GUID
+        type: string
+    type: object
+host: localhost:9999
+info:
+  contact: {}
+  description: Web API for an issuer bank
+  termsOfService: http://swagger.io/terms/
+  title: Inspiration Tech Case
+  version: 1.0.0
+paths:
+  /api/accounts/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get one exists account.
+      parameters:
+      - description: Account Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GeneralResponse'
+      summary: get one exists account
+      tags:
+      - Account
+  /api/transactions:
+    post:
+      consumes:
+      - application/json
+      description: handle new transaction.
+      parameters:
+      - description: Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.TransactionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GeneralResponse'
+      summary: handle new transaction
+      tags:
+      - Transaction
+schemes:
+- http
+- https
+swagger: "2.0"

@@ -1,0 +1,121 @@
+{
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "Web API for an issuer bank",
+        "title": "Inspiration Tech Case",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {},
+        "version": "1.0.0"
+    },
+    "host": "localhost:9999",
+    "basePath": "/",
+    "paths": {
+        "/api/accounts/{id}": {
+            "get": {
+                "description": "Get one exists account.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Account"
+                ],
+                "summary": "get one exists account",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Account Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GeneralResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/transactions": {
+            "post": {
+                "description": "handle new transaction.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "handle new transaction",
+                "parameters": [
+                    {
+                        "description": "Request Body",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.TransactionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GeneralResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.GeneralResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TransactionRequest": {
+            "type": "object",
+            "properties": {
+                "accountId": {
+                    "type": "integer"
+                },
+                "amount": {
+                    "type": "number"
+                },
+                "messageType": {
+                    "description": "PAYMENT | ADJUSTMENT",
+                    "type": "string"
+                },
+                "origin": {
+                    "description": "VISA | MASTER",
+                    "type": "string"
+                },
+                "transactionId": {
+                    "description": "GUID",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
